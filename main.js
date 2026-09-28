@@ -1,15 +1,10 @@
 /* ============================================================
    VÉLORA MOTORS — main.js
-   Vanilla JS: Language · RTL · Menu · Scroll · Counter ·
-   Filter · Modal · Parallax · Active Nav
    ============================================================ */
 
 (function () {
   'use strict';
 
-  /* ============================================================
-     STATE
-     ============================================================ */
   const state = {
     lang: localStorage.getItem('velora-lang') || 'en',
     filter: 'all',
@@ -17,15 +12,10 @@
     lastFocus: null
   };
 
-  /* ============================================================
-     DOM SHORTCUTS
-     ============================================================ */
   const $  = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-  /* ============================================================
-     LANGUAGE
-     ============================================================ */
+  /* ============ LANGUAGE ============ */
   function setLanguage(lang) {
     if (!translations[lang]) lang = 'en';
     state.lang = lang;
@@ -35,45 +25,30 @@
     document.documentElement.lang = meta.code;
     document.documentElement.dir  = meta.dir;
 
-    // Update all [data-i18n] elements
     $$('[data-i18n]').forEach(el => {
       const key = el.dataset.i18n;
-      if (translations[lang][key]) {
-        el.textContent = translations[lang][key];
-      }
+      if (translations[lang][key]) el.textContent = translations[lang][key];
     });
 
-    // Update all [data-i18n-aria] elements
     $$('[data-i18n-aria]').forEach(el => {
       const key = el.dataset.i18nAria;
-      if (translations[lang][key]) {
-        el.setAttribute('aria-label', translations[lang][key]);
-      }
+      if (translations[lang][key]) el.setAttribute('aria-label', translations[lang][key]);
     });
 
-    // Update active language label in navbar
     const current = $('#langCurrent');
     if (current) current.textContent = meta.label;
 
-    // Update mobile language active state
     $$('.mmenu__langs button').forEach(btn => {
       btn.classList.toggle('is-active', btn.dataset.lang === lang);
     });
 
-    // Re-render dynamic content
     renderFeatured(lang);
     renderShowcase(lang, state.filter);
 
-    // Re-render modal if open
-    if (state.currentModel) {
-      fillModal(state.currentModel, lang);
-    }
-
-    // Re-observe reveals
+    if (state.currentModel) fillModal(state.currentModel, lang);
     if (window.VeloraReveal) window.VeloraReveal();
   }
 
-  /* ---------- Language dropdown ---------- */
   function initLanguageDropdown() {
     const wrap = $('#lang');
     const btn  = $('#langBtn');
@@ -109,18 +84,13 @@
     });
   }
 
-  /* ---------- Mobile menu languages ---------- */
   function initMobileLang() {
     $$('.mmenu__langs button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        setLanguage(btn.dataset.lang);
-      });
+      btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
     });
   }
 
-  /* ============================================================
-     MOBILE MENU
-     ============================================================ */
+  /* ============ MOBILE MENU ============ */
   function initMobileMenu() {
     const burger = $('#burger');
     const mmenu  = $('#mmenu');
@@ -135,7 +105,6 @@
       mmenu.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
-
     function close() {
       mmenu.classList.remove('is-open');
       burger.classList.remove('is-open');
@@ -156,23 +125,16 @@
     });
   }
 
-  /* ============================================================
-     STICKY NAVBAR
-     ============================================================ */
+  /* ============ STICKY NAV ============ */
   function initStickyNav() {
     const nav = $('#nav');
     if (!nav) return;
-
-    const onScroll = () => {
-      nav.classList.toggle('is-scrolled', window.scrollY > 40);
-    };
+    const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 40);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
-  /* ============================================================
-     ACTIVE NAV LINK
-     ============================================================ */
+  /* ============ ACTIVE NAV ============ */
   function initActiveNav() {
     const links = $$('.nav__links a');
     if (!links.length) return;
@@ -184,11 +146,7 @@
     const onScroll = () => {
       const y = window.scrollY + 120;
       let current = null;
-
-      sections.forEach(sec => {
-        if (sec.offsetTop <= y) current = sec.id;
-      });
-
+      sections.forEach(sec => { if (sec.offsetTop <= y) current = sec.id; });
       links.forEach(a => {
         a.classList.toggle('is-active', a.getAttribute('href') === '#' + current);
       });
@@ -198,9 +156,7 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
-  /* ============================================================
-     SMOOTH SCROLL (for anchor clicks)
-     ============================================================ */
+  /* ============ SMOOTH SCROLL ============ */
   function initSmoothScroll() {
     $$('a[href^="#"]').forEach(a => {
       a.addEventListener('click', (e) => {
@@ -208,19 +164,14 @@
         if (!id || id === '#' || id.length < 2) return;
         const target = document.querySelector(id);
         if (!target) return;
-
         e.preventDefault();
-        const offset = 80;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-
+        const top = target.getBoundingClientRect().top + window.scrollY - 80;
         window.scrollTo({ top, behavior: 'smooth' });
       });
     });
   }
 
-  /* ============================================================
-     REVEAL ON SCROLL
-     ============================================================ */
+  /* ============ REVEAL ============ */
   let revealObserver = null;
 
   function initReveal() {
@@ -228,7 +179,6 @@
       $$('.reveal').forEach(el => el.classList.add('is-visible'));
       return;
     }
-
     revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -245,12 +195,9 @@
     if (!revealObserver) return;
     $$('.reveal:not(.is-visible)').forEach(el => revealObserver.observe(el));
   }
-
   window.VeloraReveal = observeReveals;
 
-  /* ============================================================
-     COUNTER ANIMATION
-     ============================================================ */
+  /* ============ COUNTERS ============ */
   function initCounters() {
     const counters = $$('[data-count]');
     if (!counters.length || !('IntersectionObserver' in window)) {
@@ -266,12 +213,9 @@
 
       function tick(now) {
         const p = Math.min((now - start) / duration, 1);
-        // ease-out cubic
         const eased = 1 - Math.pow(1 - p, 3);
         const val = target * eased;
-        el.textContent = decimals > 0
-          ? val.toFixed(decimals)
-          : Math.round(val).toString();
+        el.textContent = decimals > 0 ? val.toFixed(decimals) : Math.round(val).toString();
         if (p < 1) requestAnimationFrame(tick);
         else el.textContent = decimals > 0 ? target.toFixed(decimals) : target.toString();
       }
@@ -290,9 +234,7 @@
     counters.forEach(c => obs.observe(c));
   }
 
-  /* ============================================================
-     PARALLAX (Experience section)
-     ============================================================ */
+  /* ============ PARALLAX ============ */
   function initParallax() {
     const img = $('#expImg');
     const section = $('#experience');
@@ -303,21 +245,15 @@
     function update() {
       const rect = section.getBoundingClientRect();
       const vh = window.innerHeight;
-      if (rect.bottom < 0 || rect.top > vh) {
-        ticking = false;
-        return;
-      }
+      if (rect.bottom < 0 || rect.top > vh) { ticking = false; return; }
       const progress = (vh - rect.top) / (vh + rect.height);
-      const shift = (progress - 0.5) * 100; // -50 → 50
+      const shift = (progress - 0.5) * 100;
       img.style.transform = `translate3d(0, ${shift}px, 0) scale(1.12)`;
       ticking = false;
     }
 
     function onScroll() {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
     }
 
     update();
@@ -325,9 +261,7 @@
     window.addEventListener('resize', onScroll);
   }
 
-  /* ============================================================
-     SHOWCASE FILTER
-     ============================================================ */
+  /* ============ FILTERS ============ */
   function initFilters() {
     const tabs = $$('.tab');
     if (!tabs.length) return;
@@ -348,9 +282,7 @@
     });
   }
 
-  /* ============================================================
-     MODAL
-     ============================================================ */
+  /* ============ MODAL ============ */
   function fillModal(model, lang) {
     const img    = $('#modalImg');
     const cat    = $('#modalCat');
@@ -400,7 +332,6 @@
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
 
-    // focus close button
     setTimeout(() => {
       const closeBtn = modal.querySelector('.modal__close');
       if (closeBtn) closeBtn.focus();
@@ -410,22 +341,17 @@
   function closeModal() {
     const modal = $('#modal');
     if (!modal) return;
-
     modal.classList.remove('is-open');
     modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     state.currentModel = null;
-
-    if (state.lastFocus && typeof state.lastFocus.focus === 'function') {
-      state.lastFocus.focus();
-    }
+    if (state.lastFocus && typeof state.lastFocus.focus === 'function') state.lastFocus.focus();
   }
 
   function initModal() {
     const modal = $('#modal');
     if (!modal) return;
 
-    // Open buttons (delegated — works for dynamically rendered cards)
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-open]');
       if (!btn) return;
@@ -433,35 +359,18 @@
       openModal(btn.dataset.open);
     });
 
-    // Close buttons / backdrop
     modal.addEventListener('click', (e) => {
-      if (e.target.closest('[data-close]')) {
-        closeModal();
-      }
+      if (e.target.closest('[data-close]')) closeModal();
     });
 
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.classList.contains('is-open')) {
-        closeModal();
-      }
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
     });
   }
 
-  /* ============================================================
-     FOOTER YEAR (optional nicety)
-     ============================================================ */
-  function initFooterYear() {
-    // currently fixed at 2026 per spec — nothing to do
-  }
-
-  /* ============================================================
-     INIT
-     ============================================================ */
+  /* ============ INIT ============ */
   function init() {
-    // set language first (renders dynamic content)
     setLanguage(state.lang);
-
-    // wire up everything
     initLanguageDropdown();
     initMobileLang();
     initMobileMenu();
@@ -473,7 +382,6 @@
     initParallax();
     initFilters();
     initModal();
-    initFooterYear();
   }
 
   if (document.readyState === 'loading') {

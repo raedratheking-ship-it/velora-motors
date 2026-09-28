@@ -1,6 +1,5 @@
 /* ============================================================
    VÉLORA MOTORS — style.css
-   Luxury Automotive · Cinematic · Minimal · Editorial
    ============================================================ */
 
 /* ---------- 01. RESET ---------- */
@@ -735,7 +734,6 @@ h1, h2, h3, h4 {
   transform: translateY(0);
 }
 
-/* Editorial grid layout */
 .craft-item:nth-child(1) { grid-column: span 7; grid-row: span 2; }
 .craft-item:nth-child(2) { grid-column: span 5; grid-row: span 1; }
 .craft-item:nth-child(3) { grid-column: span 5; grid-row: span 1; }
@@ -1362,31 +1360,15 @@ h1, h2, h3, h4 {
   color: var(--black);
 }
 
-/* ---------- 21. RTL ADJUSTMENTS ---------- */
+/* ---------- 21. RTL ---------- */
 [dir="rtl"] body {
   font-family: 'IBM Plex Sans Arabic', 'Inter', system-ui, sans-serif;
 }
-
-[dir="rtl"] .hero__index {
-  right: auto;
-  left: var(--gutter);
-}
-
-[dir="rtl"] .lang__menu {
-  right: auto;
-  left: 0;
-}
-
+[dir="rtl"] .hero__index { right: auto; left: var(--gutter); }
+[dir="rtl"] .lang__menu  { right: auto; left: 0; }
 [dir="rtl"] .fcard__cat,
-[dir="rtl"] .scard__cat {
-  left: auto;
-  right: 24px;
-}
-
-[dir="rtl"] .craft-item figcaption {
-  left: auto;
-  right: 24px;
-}
+[dir="rtl"] .scard__cat  { left: auto; right: 24px; }
+[dir="rtl"] .craft-item figcaption { left: auto; right: 24px; }
 
 [dir="rtl"] .hero__title,
 [dir="rtl"] .sec-title,

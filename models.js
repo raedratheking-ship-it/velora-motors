@@ -1,6 +1,5 @@
 /* ============================================================
    VÉLORA MOTORS — models.js
-   Model data + rendering for Featured & Showcase sections
    ============================================================ */
 
 const MODELS = [
@@ -135,8 +134,6 @@ const MODELS = [
   }
 ];
 
-/* ---------- Rendering helpers ---------- */
-
 function getText(obj, lang) {
   if (!obj) return '';
   return obj[lang] || obj.en || '';
@@ -216,7 +213,6 @@ function renderShowcase(lang, filter = 'all') {
     </article>
   `).join('');
 
-  // Re-observe new reveal elements
   if (window.VeloraReveal) window.VeloraReveal();
 }
 

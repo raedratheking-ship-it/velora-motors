@@ -1,6 +1,5 @@
 /* ============================================================
    VÉLORA MOTORS — responsive.css
-   Breakpoints: 1440 / 1280 / 1024 / 768 / 430 / 390 / 375
    ============================================================ */
 
 /* ---------- 1440px ---------- */
@@ -14,7 +13,6 @@
     --container: 1180px;
     --gutter: 28px;
   }
-
   .nav__links { gap: 32px; }
   .footer__grid { gap: 40px; }
 }
@@ -26,27 +24,19 @@
     --nav-h: 76px;
   }
 
-  /* Navbar: hide links, show burger */
   .nav__links { display: none; }
   .nav__cta   { display: none; }
   .burger     { display: flex; }
 
-  /* Hero */
   .hero__index { display: none; }
 
-  /* Featured */
   .featured__grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
-  .featured__grid .fcard:last-child {
-    grid-column: span 2;
-  }
-  .featured__grid .fcard:last-child .fcard__media {
-    aspect-ratio: 16 / 9;
-  }
+  .featured__grid .fcard:last-child { grid-column: span 2; }
+  .featured__grid .fcard:last-child .fcard__media { aspect-ratio: 16 / 9; }
 
-  /* Performance */
   .perf__grid {
     grid-template-columns: 1fr;
     gap: 56px;
@@ -56,7 +46,6 @@
     max-width: 720px;
   }
 
-  /* Craft grid → simpler */
   .craft-grid {
     grid-template-columns: repeat(6, 1fr);
     grid-auto-rows: 26vw;
@@ -68,28 +57,23 @@
   .craft-item:nth-child(5) { grid-column: span 3; grid-row: span 1; }
   .craft-item:nth-child(6) { grid-column: span 6; grid-row: span 1; }
 
-  /* Interior */
   .interior { min-height: 80vh; }
 
-  /* Showcase */
   .showcase__grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
 
-  /* About */
   .about__grid {
     grid-template-columns: 1fr;
     gap: 32px;
   }
 
-  /* Footer */
   .footer__grid {
     grid-template-columns: 1fr 1fr;
     gap: 40px;
   }
 
-  /* Modal */
   .modal__panel {
     grid-template-columns: 1fr;
     max-height: 88vh;
@@ -100,7 +84,7 @@
   }
 }
 
-/* ---------- 768px (Small Tablet / Large Phone) ---------- */
+/* ---------- 768px ---------- */
 @media (max-width: 768px) {
   :root {
     --gutter: 20px;
@@ -113,7 +97,6 @@
   .nav__logo { font-size: 16px; letter-spacing: 0.28em; }
   .nav__logo span { font-size: 9px; }
 
-  /* Hero */
   .hero__content { padding-top: 100px; }
   .hero__cta {
     flex-direction: column;
@@ -126,19 +109,13 @@
   }
   .hero__scroll { bottom: 28px; }
 
-  /* Featured */
   .featured__grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  .featured__grid .fcard:last-child {
-    grid-column: auto;
-  }
-  .featured__grid .fcard:last-child .fcard__media {
-    aspect-ratio: 4 / 5;
-  }
+  .featured__grid .fcard:last-child { grid-column: auto; }
+  .featured__grid .fcard:last-child .fcard__media { aspect-ratio: 4 / 5; }
 
-  /* Performance stats */
   .stats {
     grid-template-columns: 1fr;
     gap: 28px;
@@ -150,7 +127,6 @@
   }
   .stats__item:last-child { border-bottom: 0; padding-bottom: 0; }
 
-  /* Craft */
   .craft-grid {
     grid-template-columns: 1fr;
     grid-auto-rows: auto;
@@ -167,16 +143,11 @@
     transform: none;
   }
 
-  /* Interior */
   .interior { min-height: 70vh; }
-  .interior__content {
-    padding: 80px var(--gutter);
-  }
+  .interior__content { padding: 80px var(--gutter); }
 
-  /* Experience */
   .exp { min-height: 80vh; }
 
-  /* Showcase */
   .showcase__grid {
     grid-template-columns: 1fr;
     gap: 20px;
@@ -194,16 +165,11 @@
     white-space: nowrap;
   }
 
-  /* About */
-  .about__words li {
-    font-size: clamp(1.8rem, 9vw, 3rem);
-  }
+  .about__words li { font-size: clamp(1.8rem, 9vw, 3rem); }
   .about__title { margin-bottom: 40px; }
 
-  /* CTA */
   .cta { padding: 96px 0; }
 
-  /* Footer */
   .footer { padding: 64px 0 32px; }
   .footer__grid {
     grid-template-columns: 1fr;
@@ -221,11 +187,8 @@
     align-items: flex-start;
   }
 
-  /* Modal */
   .modal { padding: 16px; }
-  .modal__panel {
-    max-height: 92vh;
-  }
+  .modal__panel { max-height: 92vh; }
   .modal__specs {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -233,7 +196,7 @@
   .modal__cta { width: 100%; }
 }
 
-/* ---------- 430px (iPhone Pro Max) ---------- */
+/* ---------- 430px ---------- */
 @media (max-width: 430px) {
   :root { --gutter: 18px; }
 
@@ -267,7 +230,7 @@
   .modal__title { font-size: 1.4rem; }
 }
 
-/* ---------- 390px (iPhone 14/15) ---------- */
+/* ---------- 390px ---------- */
 @media (max-width: 390px) {
   .hero__title { font-size: 2.1rem; }
   .hero__cta .btn { max-width: 100%; }
@@ -280,7 +243,7 @@
   }
 }
 
-/* ---------- 375px (iPhone SE / Mini) ---------- */
+/* ---------- 375px ---------- */
 @media (max-width: 375px) {
   :root { --gutter: 16px; }
 
@@ -303,15 +266,13 @@
 
 /* ---------- Landscape phone ---------- */
 @media (max-height: 500px) and (orientation: landscape) {
-  .hero {
-    min-height: 620px;
-  }
+  .hero { min-height: 620px; }
   .hero__scroll { display: none; }
   .mmenu { padding-top: 80px; }
   .mmenu__nav a { padding: 8px 0; font-size: 1.6rem; }
 }
 
-/* ---------- Very wide screens ---------- */
+/* ---------- Very wide ---------- */
 @media (min-width: 1920px) {
   :root { --container: 1600px; }
   .hero__title { font-size: 7.5rem; }
